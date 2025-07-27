@@ -1,0 +1,7 @@
+/workspaces/so_long/build/CMakeFiles/mlx42.dir
+/workspaces/so_long/build/CMakeFiles/edit_cache.dir
+/workspaces/so_long/build/CMakeFiles/rebuild_cache.dir
+/workspaces/so_long/build/CMakeFiles/list_install_components.dir
+/workspaces/so_long/build/CMakeFiles/install.dir
+/workspaces/so_long/build/CMakeFiles/install/local.dir
+/workspaces/so_long/build/CMakeFiles/install/strip.dir

@@ -3,10 +3,10 @@ BONUS = so_long_bonus
 
 SRC_DIR = src
 BONUS_DIR = bonus
-INCLUDE_DIR = includes
+INCLUDE_DIR = .
 OBJ_DIR = obj
 OBJ_BONUS_DIR = obj_bonus
-LIBFT_DIR = ./libs/libft
+LIBFT_DIR = ./libs/Libft
 MLX_DIR = ./libs/MLX42
 
 HEADER = $(INCLUDE_DIR)/so_long.h
