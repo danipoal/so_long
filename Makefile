@@ -7,6 +7,7 @@ INCLUDE_DIR = .
 OBJ_DIR = obj
 OBJ_BONUS_DIR = obj_bonus
 LIBFT_DIR = ./libs/Libft
+PRINTF_DIR = ./libs/ft_printf
 MLX_DIR = ./libs/MLX42
 
 HEADER = $(INCLUDE_DIR)/so_long.h
@@ -14,7 +15,7 @@ BONUS_HEADER = $(INCLUDE_DIR)/so_long_bonus.h
 
 
 # Fuentes normales
-SRC_FILES = main.c
+SRC_FILES = main.c utils.c
 
 # Fuentes bonus
 BONUS_FILES = 
@@ -28,6 +29,7 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 OBJS_BONUS = $(addprefix $(OBJ_BONUS_DIR)/, $(BONUS_FILES:.c=.o))
 
 LIBFT = $(LIBFT_DIR)/libft.a
+PRINTF = $(PRINTF_DIR)/libftprintf.a
 MLX = $(MLX_DIR)/build/libmlx42.a
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
@@ -49,9 +51,13 @@ $(LIBFT):
 	@make -C $(LIBFT_DIR)
 	@make -C $(LIBFT_DIR) bonus
 
-$(NAME): $(OBJS) $(LIBFT) $(HEADER) Makefile
+$(PRINTF):
+	@echo "$(BLUE)-> Compilando Ft_Printf...$(RESET)"
+	@make -C $(PRINTF_DIR)
+
+$(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(HEADER) Makefile
 	@echo "$(GREEN)✔ Compilando $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) $(MLX) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(GREEN)   Compilación completada!$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
@@ -63,9 +69,9 @@ $(OBJ_DIR):
 
 bonus: $(BONUS)
 
-$(BONUS): $(OBJS_BONUS) $(LIBFT) $(BONUS_HEADER) Makefile
+$(BONUS): $(OBJS_BONUS) $(LIBFT) $(PRINTF) $(BONUS_HEADER) Makefile
 	@echo "$(GREEN)✔ Compilando $(BONUS)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(BONUS)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(PRINTF) $(MLX) $(MLX_FLAGS) -o $(BONUS)
 	@echo "$(GREEN)   Compilación BONUS completada!$(RESET)"
 
 $(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/%.c | $(OBJ_BONUS_DIR)
@@ -78,11 +84,13 @@ $(OBJ_BONUS_DIR):
 clean:
 	@echo "$(RED)  Limpiando objetos...$(RESET)"
 	@make -C $(LIBFT_DIR) clean
+	@make -C $(PRINTF_DIR) clean
 	@$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
 
 f fclean: clean
 	@echo "$(RED)  Borrando ejecutables...$(RESET)"
 	@make -C $(LIBFT_DIR) fclean
+	@make -C $(PRINTF_DIR) fclean
 	@$(RM) $(NAME) $(BONUS)
 
 re: fclean all

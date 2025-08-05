@@ -1,0 +1,26 @@
+# Ignorar todo por defecto
+*
+
+# Excepciones (no ignorar estos)
+!/.vscode/
+!/build/
+!/libs/
+!/src/
+!/maps/
+!/textures/
+!/Makefile
+!/readme.md
+!/so_long
+!/so_long.h
+
+# Ignorar archivos específicos dentro de las carpetas permitidas
+!.vscode/*
+!build/*
+!libs/*
+!src/*
+!maps/*
+!/textures/*
+
+# Ignorar archivos ocultos del sistema
+.*
+!.gitignore
