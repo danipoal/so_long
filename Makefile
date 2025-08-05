@@ -8,6 +8,7 @@ OBJ_DIR = obj
 OBJ_BONUS_DIR = obj_bonus
 LIBFT_DIR = ./libs/Libft
 PRINTF_DIR = ./libs/ft_printf
+GNL_DIR = ./libs/gnl
 MLX_DIR = ./libs/MLX42
 
 HEADER = $(INCLUDE_DIR)/so_long.h
@@ -30,6 +31,7 @@ OBJS_BONUS = $(addprefix $(OBJ_BONUS_DIR)/, $(BONUS_FILES:.c=.o))
 
 LIBFT = $(LIBFT_DIR)/libft.a
 PRINTF = $(PRINTF_DIR)/libftprintf.a
+GNL = $(GNL_DIR)/gnl.a
 MLX = $(MLX_DIR)/build/libmlx42.a
 MLX_FLAGS = -ldl -lglfw -pthread -lm
 
@@ -55,9 +57,13 @@ $(PRINTF):
 	@echo "$(BLUE)-> Compilando Ft_Printf...$(RESET)"
 	@make -C $(PRINTF_DIR)
 
-$(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(HEADER) Makefile
+$(GNL):
+	@echo "$(BLUE)-> Compilando GNL...$(RESET)"
+	@make -C $(GNL_DIR)
+
+$(NAME): $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(HEADER) Makefile
 	@echo "$(GREEN)✔ Compilando $(NAME)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(MLX_FLAGS) -o $(NAME)
 	@echo "$(GREEN)   Compilación completada!$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
@@ -69,9 +75,9 @@ $(OBJ_DIR):
 
 bonus: $(BONUS)
 
-$(BONUS): $(OBJS_BONUS) $(LIBFT) $(PRINTF) $(BONUS_HEADER) Makefile
+$(BONUS): $(OBJS_BONUS) $(LIBFT) $(PRINTF) $(GNL) $(BONUS_HEADER) Makefile
 	@echo "$(GREEN)✔ Compilando $(BONUS)...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(PRINTF) $(MLX) $(MLX_FLAGS) -o $(BONUS)
+	@$(CC) $(CFLAGS) $(OBJS_BONUS) $(LIBFT) $(PRINTF) $(GNL) $(MLX) $(MLX_FLAGS) -o $(BONUS)
 	@echo "$(GREEN)   Compilación BONUS completada!$(RESET)"
 
 $(OBJ_BONUS_DIR)/%.o: $(BONUS_DIR)/%.c | $(OBJ_BONUS_DIR)
@@ -85,12 +91,14 @@ clean:
 	@echo "$(RED)  Limpiando objetos...$(RESET)"
 	@make -C $(LIBFT_DIR) clean
 	@make -C $(PRINTF_DIR) clean
+	@make -C $(GNL_DIR) clean
 	@$(RM) $(OBJ_DIR) $(OBJ_BONUS_DIR)
 
 f fclean: clean
 	@echo "$(RED)  Borrando ejecutables...$(RESET)"
 	@make -C $(LIBFT_DIR) fclean
 	@make -C $(PRINTF_DIR) fclean
+	@make -C $(GNL_DIR) fclean
 	@$(RM) $(NAME) $(BONUS)
 
 re: fclean all
